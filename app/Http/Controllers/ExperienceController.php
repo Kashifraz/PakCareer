@@ -51,7 +51,7 @@ class ExperienceController extends Controller
             'profile_id' => $request->profile_id,
         ]);
 
-        return redirect()->back()->with('success', 'question posted successfully');
+        return redirect()->back()->with('success', 'Experience added successfully');
     }
 
     /**

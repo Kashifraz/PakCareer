@@ -36,7 +36,7 @@
                     
                     @if (Auth::user()->role == 's')
                     <x-nav-link :href="route('counselors.show')" :active="request()->routeIs('counselors.show')">
-                        {{ __('counselors') }}
+                        {{ __('Counselors') }}
                     </x-nav-link>
                     @endif
                 </div>
@@ -47,7 +47,17 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                        @php
+                        $profile_image = Auth::user()->profile->profile_image;
+                        @endphp
+                        <div>
+                            @if ($profile_image != "NA")
+                            <img class=" inline-flex w-6 h-6 mr-2 rounded-full" src="{{ asset('images/'.$profile_image)}}">
+                            @else
+                            <img class="inline-flex w-6 h-6 mr-2 rounded-full" src="{{ asset('images/avatar.png')}}">
+                            @endif
+                            {{ Auth::user()->name }}
+                        </div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -101,9 +111,13 @@
             </x-responsive-nav-link>
             @endif
 
-            @if (Auth::user()->role == 'a')
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
+                {{ __('Profile') }}
+            </x-responsive-nav-link>
+
+            @if (Auth::user()->role == 's')
+            <x-responsive-nav-link :href="route('counselors.show')" :active="request()->routeIs('counselors.show')">
+                {{ __('Counselors') }}
             </x-responsive-nav-link>
             @endif
 

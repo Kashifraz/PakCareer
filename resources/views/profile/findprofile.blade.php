@@ -39,18 +39,23 @@
 
                 </div>
                 <button type="submit" class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
-                 Search
+                    Search
                 </button>
             </form>
 
 
             @if($counselors->count() > 0 )
             @foreach ($counselors as $counselor )
+            @if ($counselor->profile->profession != "NA")
             <section class="mb-2 border p-6 bg-white shadow sm:rounded-lg mb-5">
                 <div class="mx-auto">
                     <div class="card md:flex max-w-4xl">
                         <div class="w-20 h-20 mx-auto mb-6 md:mr-6 flex-shrink-0">
+                            @if ($counselor->profile->profile_image != "NA")
                             <img class="object-cover rounded-full" src="{{ asset('images/'.$counselor->profile->profile_image)}}">
+                            @else
+                            <img class="object-cover rounded-full" src="{{ asset('images/avatar.png')}}">
+                            @endif
                         </div>
                         <div class="flex-grow text-center md:text-left">
                             <p class="text-md">{{$counselor->profile->profession}}
@@ -71,6 +76,7 @@
                     </div>
                 </div>
             </section>
+            @endif
             @endforeach
             @else
             <p>No counselors found!</p>

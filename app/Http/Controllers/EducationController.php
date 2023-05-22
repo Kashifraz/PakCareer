@@ -41,17 +41,28 @@ class EducationController extends Controller
             'duration' => 'required|numeric|min:0|max:100', 
             'score' => 'required|numeric|min:0|max:100',
         ]);
+        if($request->complete){
+            Education::create([
+                'degree_title' => $request->degree_title,
+                'institution' => $request->institution,
+                'duration' => $request->duration,
+                'grade' => $request->score,
+                'isComplete' => $request->complete,
+                'profile_id' => $request->profile_id,
+            ]);
+        }else{
+            Education::create([
+                'degree_title' => $request->degree_title,
+                'institution' => $request->institution,
+                'duration' => $request->duration,
+                'grade' => $request->score,
+                'isComplete' => 0,
+                'profile_id' => $request->profile_id,
+            ]);
+        }
+        
 
-        Education::create([
-            'degree_title' => $request->degree_title,
-            'institution' => $request->institution,
-            'duration' => $request->duration,
-            'grade' => $request->score,
-            'isComplete' => $request->complete,
-            'profile_id' => $request->profile_id,
-        ]);
-
-        return redirect()->back()->with('success', 'skill added successfully');
+        return redirect()->back()->with('success', 'Education added successfully');
     }
 
     /**
