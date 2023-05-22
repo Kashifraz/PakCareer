@@ -12,14 +12,14 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
 
                     @if (Auth::user()->role == 'c')
-                    <x-nav-link :href="route('counselor.dashboard')" :active="request()->routeIs('counselor.dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('counselor.discussion')" :active="request()->routeIs('counselor.discussion')">
+                        {{ __('Discussion') }}
                     </x-nav-link>
                     @endif
 
                     @if (Auth::user()->role == 's')
-                    <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('student.discussion')" :active="request()->routeIs('student.discussion')">
+                        {{ __('Discussion') }}
                     </x-nav-link>
                     @endif
 
@@ -29,11 +29,16 @@
                     </x-nav-link>
                     @endif
 
-                    
+                    @if (Auth::user()->role == 'c')
+                    <x-nav-link :href="route('message.alerts')" :active="request()->routeIs('message.alerts')">
+                        {{ __('Messages') }}
+                    </x-nav-link>
+                    @endif
+
                     <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
                         {{ __('Profile') }}
                     </x-nav-link>
-                    
+
                     @if (Auth::user()->role == 's')
                     <x-nav-link :href="route('counselors.show')" :active="request()->routeIs('counselors.show')">
                         {{ __('Counselors') }}
@@ -47,17 +52,17 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                        @php
-                        $profile_image = Auth::user()->profile->profile_image;
-                        @endphp
-                        <div>
-                            @if ($profile_image != "NA")
-                            <img class=" inline-flex w-6 h-6 mr-2 rounded-full" src="{{ asset('images/'.$profile_image)}}">
-                            @else
-                            <img class="inline-flex w-6 h-6 mr-2 rounded-full" src="{{ asset('images/avatar.png')}}">
-                            @endif
-                            {{ Auth::user()->name }}
-                        </div>
+                            @php
+                            $profile_image = Auth::user()->profile->profile_image;
+                            @endphp
+                            <div>
+                                @if ($profile_image != "NA")
+                                <img class=" inline-flex w-6 h-6 mr-2 rounded-full" src="{{ asset('images/'.$profile_image)}}">
+                                @else
+                                <img class="inline-flex w-6 h-6 mr-2 rounded-full" src="{{ asset('images/avatar.png')}}">
+                                @endif
+                                {{ Auth::user()->name }}
+                            </div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -101,19 +106,22 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             @if (Auth::user()->role == 'c')
-            <x-responsive-nav-link :href="route('counselor.dashboard')" :active="request()->routeIs('counselor.dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('counselor.discussion')" :active="request()->routeIs('counselor.discussion')">
+                {{ __('Discussion') }}
             </x-responsive-nav-link>
             @endif
             @if (Auth::user()->role == 's')
-            <x-responsive-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('student.discussion')" :active="request()->routeIs('student.discussion')">
+                {{ __('Discussion') }}
             </x-responsive-nav-link>
             @endif
 
-            <x-responsive-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
-                {{ __('Profile') }}
+            @if (Auth::user()->role == 'c')
+            <x-responsive-nav-link :href="route('message.alerts')" :active="request()->routeIs('message.alerts')">
+                {{ __('Messages') }}
             </x-responsive-nav-link>
+            @endif
+            
 
             @if (Auth::user()->role == 's')
             <x-responsive-nav-link :href="route('counselors.show')" :active="request()->routeIs('counselors.show')">

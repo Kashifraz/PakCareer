@@ -56,9 +56,11 @@
                     <div class="col-span-2 p-6">
                         <h5 class="mb-1 text-xl font-bold text-lg text-gray-900  ">Profile Summary</h5>
                         <p class="mb-3 text-gray-500 text-lg dark:text-gray-400">{{$profile->intro}}</p>
+                        @if(auth::user()->id != $profile->user->id)
                         <div class="flex mt-4 space-x-3 md:mt-6">
-                            <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">Message Now</a>
+                            <a href="{{route('message',[Auth::user()->id,$profile->user->id])}}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">Message Now</a>
                         </div>
+                        @endif
                     </div>
                 </div>
 

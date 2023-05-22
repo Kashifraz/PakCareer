@@ -36,9 +36,11 @@ class ProfileController extends Controller
         $counselors = null;
         if ($request->search) {
             $counselors = User::with(['profile'])->where('role', 'c')
-            ->whereRelation('profile', 'profession', 'LIKE', '%' . $request->search . '%')->paginate(3);
+            ->whereRelation('profile', 'profession', '!=' , 'NA')
+            ->whereRelation('profile', 'profession', 'LIKE', '%' . $request->search . '%')->paginate(100);
         } else {
-            $counselors = User::with(['profile'])->where('role', 'c')->paginate(3);
+            $counselors = User::with(['profile'])->where('role', 'c')
+            ->whereRelation('profile', 'profession', '!=' , 'NA')->paginate(8);
         }
 
         return view('profile.findprofile', [

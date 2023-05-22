@@ -5,6 +5,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\MetaAnswerController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReplyController;
@@ -28,14 +29,14 @@ Route::get('/', function () {
 })->name('index');
 //admin Dashboard
 Route::get('/admin/dashboard', function () {
-    return view('dashboard');
+    return view('discussion');
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
 
 //counselor Dashboard
-Route::get('/counselor/dashboard', [QuestionController::class, 'index'])->middleware(['auth', 'verified'])->name('counselor.dashboard');
+Route::get('/counselor/discussion', [QuestionController::class, 'index'])->middleware(['auth', 'verified'])->name('counselor.discussion');
 
 //student dashboard
-Route::get('student/dashboard', [QuestionController::class, 'index'])->middleware(['auth', 'verified'])->name('student.dashboard');
+Route::get('student/discussion', [QuestionController::class, 'index'])->middleware(['auth', 'verified'])->name('student.discussion');
 
 //Account settings 
 Route::middleware('auth')->group(function () {
@@ -49,23 +50,33 @@ Route::resource('profile', ProfileController::class, [
     'only' => ['index', 'update', 'show', 'create']
 ]);
 
-Route::get('counselors', [ProfileController::class, 'create'])->name('counselors.show');
-Route::post('counselors', [ProfileController::class, 'create'])->name('counselors.show');
+Route::resource('message', MessageController::class, [
+    'only' => ['index', 'update', 'show', 'create']
+]);
+
+Route::middleware('auth')->group(function(){
+    Route::get('/message/{student_id}/{counselor_id}',[MessageController::class,'index'])->name('message');
+    Route::post('/post_message',[MessageController::class,'store'])->name('message.post');
+    Route::get('/message_alerts',[MessageController::class,'showalerts'])->name('message.alerts');
+});
+
+Route::get('counselors', [ProfileController::class, 'create'])->name('counselors.show')->middleware('auth');
+Route::post('counselors', [ProfileController::class, 'create'])->name('counselors.show')->middleware('auth');
 
 //Experiences Routes
 Route::resource('experience', ExperienceController::class, [
     'only' => ['store', 'update', 'destroy']
-]);
+])->middleware('auth');
 
 //Education Routes
 Route::resource('education', EducationController::class, [
     'only' => ['store', 'update', 'destroy']
-]);
+])->middleware('auth');
 
-//Education Routes
+//skill Routes
 Route::resource('skill', SkillController::class, [
     'only' => ['store', 'update', 'destroy']
-]);
+])->middleware('auth');
 
 //Discussion Forum
 Route::middleware('auth')->group(function () {
