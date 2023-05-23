@@ -48,6 +48,10 @@
                                         @endif
                                         <h5 class="mb-1 text-xl text-center font-medium text-gray-900 ">{{$profile->user->name}}</h5>
                                         <span class="text-sm text-gray-500 dark:text-gray-400">{{$profile->profession}}</span>
+                                        @if($profile->user->verified)
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 mt-3 px-2.5 py-0.5 rounded ">
+                                            <i class="fa-solid fa-check"></i> Verified</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

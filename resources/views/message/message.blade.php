@@ -25,54 +25,57 @@
             </div>
             @endif -->
 
-            @if($messages->count() > 0 )
+            @if(count($messages) > 0 )
             @foreach ($messages as $message )
-            @if(Auth::user()->id == $message->user_id)
-            <section class="mb-2 border p-6 bg-blue-100 shadow sm:rounded-lg mb-5">
-                <div class="mx-auto">
-                    <div class="card md:flex max-w-4xl">
-                        <div class="w-10 h-10 mx-auto mb-6 md:mr-6 flex-shrink-0">
-                            @if ($message->user->profile->profile_image != "NA")
-                            <img class="object-cover rounded-full" src="{{ asset('images/'.$message->user->profile->profile_image)}}">
-                            @else
-                            <img class="object-cover rounded-full" src="{{ asset('images/avatar.png')}}">
-                            @endif
-                        </div>
-                        <div class="flex-grow text-center md:text-left">
-                            @if(Auth::user()->id == $message->user_id)
-                            <p class="text-md mb-2"><b> Your Message</b></p>
-                            @else
-                            <p class="text-md mb-2"><b>{{$message->user->name}} </b>| {{$message->user->profile->profession}}</p>
-                            @endif
-                            <p class="mt-2 mb-3">{{$message->message_text}}</p>
+            <div>
+            @if($message->is_student)
+                <section class="mb-2 border p-6 bg-blue-100 shadow sm:rounded-lg mb-5">
+                    <div class="mx-auto">
+                        <div class="card md:flex max-w-4xl">
+                            <div class="w-10 h-10 mx-auto mb-6 md:mr-6 flex-shrink-0">
+                                @if ($message->user->profile->profile_image != "NA")
+                                <img class="object-cover rounded-full" src="{{ asset('images/'.$message->user->profile->profile_image)}}">
+                                @else
+                                <img class="object-cover rounded-full" src="{{ asset('images/avatar.png')}}">
+                                @endif
+                            </div>
+                            <div class="flex-grow text-center md:text-left">
+                                @if(Auth::user()->id == $message->user_id)
+                                <p class="text-md mb-2"><b> Your Message</b></p>
+                                @else
+                                <p class="text-md mb-2"><b>{{$message->user->name}} </b>| {{$message->user->profile->profession}}</p>
+                                @endif
+                                <p class="mt-2 mb-3">{{$message->message_text}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
             @else
-
-            <section class="mb-2 border p-6 bg-green-100 shadow sm:rounded-lg mb-5">
-                <div class="mx-auto">
-                    <div class="card md:flex max-w-4xl">
-                        <div class="flex-grow text-center ">
-                            @if(Auth::user()->id == $message->user_id)
-                            <p class="text-md mb-2 md:text-right"><b> You </b></p>
-                            @else
-                            <p class="text-md mb-2 md:text-right"><b>{{$message->user->name}} </b>| {{$message->user->profile->profession}}</p>
-                            @endif
-                            <p class="mt-2 mb-3 md:text-right">{{$message->message_text}}</p>
-                        </div>
-                        <div class="w-10 h-10  mb-6 md:ml-6 flex-shrink-0 right-0">
-                            @if ($message->user->profile->profile_image != "NA")
-                            <img class="object-cover rounded-full" src="{{ asset('images/'.$message->user->profile->profile_image)}}">
-                            @else
-                            <img class="object-cover rounded-full" src="{{ asset('images/avatar.png')}}">
-                            @endif
+                <section class="mb-2 border p-6 bg-green-100 shadow sm:rounded-lg mb-5">
+                    <div class="mx-auto">
+                
+                        <div class="card md:flex max-w-4xl">
+                            <div class="flex-grow text-center ">
+                                @if(Auth::user()->id == $message->user_id)
+                                <p class="text-md mb-2 md:text-right"><b> Your Message </b></p>
+                                @else
+                                <p class="text-md mb-2 md:text-right"><b>{{$message->user->name}} </b>| {{$message->user->profile->profession}}</p>
+                                @endif
+                                <p class="mt-2 mb-3 md:text-right">{{$message->message_text}}</p>
+                            </div>
+                            <div class="w-10 h-10  mb-6 md:ml-6 flex-shrink-0 right-0">
+                                @if ($message->user->profile->profile_image != "NA")
+                                <img class="object-cover rounded-full" src="{{ asset('images/'.$message->user->profile->profile_image)}}">
+                                @else
+                                <img class="object-cover rounded-full" src="{{ asset('images/avatar.png')}}">
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            @endif
+                </section>
+             @endif
+            </div>
+
             @endforeach
             @else
             <section class="mb-2 border p-6 bg-white shadow sm:rounded-lg mb-5">

@@ -25,7 +25,8 @@ use App\models\MetaAnswer;
                         @endif
                         <div class="font-medium text-md">
                             <div>Asked by <b>{{$question->user->name}}</b></div>
-                            <div class="text-sm text-gray-500 ">{{date('Y/m/d H:i:s',strtotime($question->created_at))}}</div>
+                            <div class="text-sm text-gray-500 ">{{date('Y/m/d H:i:s',strtotime($question->created_at))}} </div>
+
                         </div>
                     </div>
                     <hr>
@@ -44,7 +45,16 @@ use App\models\MetaAnswer;
                             <img class="w-12 h-12 rounded-full" src="{{ asset('images/avatar.png')}}">
                             @endif
                             <div class="font-medium text-md">
-                                <div>Answered by <b>{{$answer->user->name}}</b></div>
+                                <div>Answered by <b>{{$answer->user->name}}</b> 
+                                    @if ($answer->user->role == 'c')
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded ">Counselor</span>
+                                    @endif
+
+                                    @if ($answer->user->role == 's')
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded ">Student</span>
+                                    @endif
+                                        
+                                </div>
                                 <div class="text-sm text-gray-500 ">{{date('Y/m/d H:i:s',strtotime($answer->created_at))}}</div>
                             </div>
                         </div>

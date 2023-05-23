@@ -27,6 +27,14 @@
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('admin.students')" :active="request()->routeIs('admin.students')">
+                        {{ __('Students') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('admin.counselors')" :active="request()->routeIs('admin.counselors')">
+                        {{ __('Counselors') }}
+                    </x-nav-link>
                     @endif
 
                     @if (Auth::user()->role == 'c')
@@ -35,10 +43,12 @@
                     </x-nav-link>
                     @endif
 
+                    @if(Auth::user()->role == 's' || Auth::user()->role == 'c')
                     <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
                         {{ __('Profile') }}
                     </x-nav-link>
-
+                    @endif
+                    
                     @if (Auth::user()->role == 's')
                     <x-nav-link :href="route('counselors.show')" :active="request()->routeIs('counselors.show')">
                         {{ __('Counselors') }}
@@ -53,10 +63,12 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             @php
-                            $profile_image = Auth::user()->profile->profile_image;
+                            if(Auth::user()->role != "a"){
+                                $profile_image = Auth::user()->profile->profile_image;
+                            }
                             @endphp
                             <div>
-                                @if ($profile_image != "NA")
+                                @if (Auth::user()->role != "a" && $profile_image != "NA")
                                 <img class=" inline-flex w-6 h-6 mr-2 rounded-full" src="{{ asset('images/'.$profile_image)}}">
                                 @else
                                 <img class="inline-flex w-6 h-6 mr-2 rounded-full" src="{{ asset('images/avatar.png')}}">
