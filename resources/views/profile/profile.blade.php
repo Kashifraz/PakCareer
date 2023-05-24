@@ -28,7 +28,7 @@
 
             <!-- first row -->
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                @if(Auth::user()->id == $profile->id)
+                @if(Auth::user()->id == $profile->user->id)
                 <div class="flex justify-end px-4 ">
                     <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500" onclick="profileModal(true)" type="button">
                         <i class="fa-solid fa-pen-to-square"></i>
@@ -77,7 +77,7 @@
                         <div class="w-full p-8  ">
                             <div class="flex items-center justify-between mb-4 divide-y divide-gray-200">
                                 <h5 class="text-xl font-bold leading-none text-gray-900 ">Education</h5>
-                                @if(Auth::user()->id == $profile->id)
+                                @if(Auth::user()->id == $profile->user->id)
                                 <button class="text-sm font-medium text-blue-600 hover:underline" onclick="educationModal(true)">
                                     Add New
                                 </button>
@@ -145,7 +145,7 @@
                             <div class="w-full p-8  ">
                                 <div class="flex items-center justify-between mb-4 divide-y divide-gray-200">
                                     <h5 class="text-xl font-bold leading-none text-gray-900 ">Experience</h5>
-                                    @if(Auth::user()->id == $profile->id)
+                                    @if(Auth::user()->id == $profile->user->id)
                                     <button class="text-sm font-medium text-blue-600 hover:underline" onclick="experienceModal(true)">
                                         Add New
                                     </button>
@@ -207,7 +207,7 @@
                     <div class="col-span-3">
                         <div class="flex items-center justify-between mb-4 divide-y divide-gray-200">
                             <h5 class="text-xl font-bold leading-none text-gray-900 ">Skills</h5>
-                            @if(Auth::user()->id == $profile->id)
+                            @if(Auth::user()->id == $profile->user->id)
                             <button class="text-sm font-medium text-blue-600 hover:underline" onclick="skillModal(true)">
                                 Add New
                             </button>
