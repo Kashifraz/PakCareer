@@ -12,8 +12,13 @@ use App\models\MetaAnswer;
     <div class="py-5">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class=" overflow-hidden">
-
+                @if(Session::has('success'))
+                <div class=" max-w-4xl mx-auto bg-green-100 mb-4 border-l-4 border-green-500 text-green-700 p-4 " role="alert">
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+                @endif
                 <div class=" p-6 mx-6 bg-white border border-gray-200 rounded-lg shadow ">
+
                     <div class="flex items-center space-x-4 mb-5">
                         @php
                         $profile_image = $question->user->profile->profile_image;
@@ -45,15 +50,15 @@ use App\models\MetaAnswer;
                             <img class="w-12 h-12 rounded-full" src="{{ asset('images/avatar.png')}}">
                             @endif
                             <div class="font-medium text-md">
-                                <div>Answered by <b>{{$answer->user->name}}</b> 
+                                <div>Answered by <b>{{$answer->user->name}}</b>
                                     @if ($answer->user->role == 'c')
-                                        <span class="bg-green-100 text-green-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded ">Counselor</span>
+                                    <span class="bg-green-100 text-green-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded ">Counselor</span>
                                     @endif
 
                                     @if ($answer->user->role == 's')
-                                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded ">Student</span>
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-medium ml-2 px-2.5 py-0.5 rounded ">Student</span>
                                     @endif
-                                        
+
                                 </div>
                                 <div class="text-sm text-gray-500 ">{{date('Y/m/d H:i:s',strtotime($answer->created_at))}}</div>
                             </div>
@@ -69,7 +74,8 @@ use App\models\MetaAnswer;
                         ->where('user_id', auth()->user()->id)
                         ->where('is_downvoted',true)->get();
                         @endphp
-                        @if (count($upvoted) == 0 && count($downvoted) == 0)
+
+                        @if (count($upvoted) == 0 && count($downvoted) == 0 && Auth::user()->role != 'a')
                         <a href="{{route('count.upvote',['answer' => $answer->id, 'user' => auth()->user()->id] )}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-800 bg-gray-100 rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 ">
                             <i class="fa-solid fa-thumbs-up"></i>
                         </a>
@@ -77,7 +83,7 @@ use App\models\MetaAnswer;
                             <i class="fa-solid fa-thumbs-down"></i>
                         </a>
                         @endif
-                        @if(count($upvoted) != 0 && count($downvoted) == 0)
+                        @if(count($upvoted) != 0 && count($downvoted) == 0 && Auth::user()->role != 'a' )
                         <a class="inline-flex items-center  px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                             <i class="fa-solid fa-thumbs-up"></i>
                         </a>
@@ -85,12 +91,18 @@ use App\models\MetaAnswer;
                             <i class="fa-solid fa-thumbs-down"></i>
                         </a>
                         @endif
-                        @if(count($upvoted) == 0 && count($downvoted) != 0)
+                        @if(count($upvoted) == 0 && count($downvoted) != 0 && Auth::user()->role != 'a')
                         <a href="{{route('count.upvote',['answer' => $answer->id, 'user' => auth()->user()->id] )}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-800 bg-gray-100 rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 ">
                             <i class="fa-solid fa-thumbs-up"></i>
                         </a>
                         <a class="inline-flex items-center  px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                             <i class="fa-solid fa-thumbs-down"></i>
+                        </a>
+                        @endif
+
+                        @if (Auth::user()->id == $answer->user->id || Auth::user()->role == 'a')
+                        <a href="{{route('answer.destroy',$answer->id)}}" class="inline-flex items-center ml-2 px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 ">
+                            <i class="fa fa-trash "></i>
                         </a>
                         @endif
 
@@ -109,6 +121,7 @@ use App\models\MetaAnswer;
                     @endif
 
 
+                    @if(Auth::user()->role != 'a')
                     <div class="p-6 text-gray-900">
                         <form method="post" action="{{route('post.answer')}}">
                             @csrf
@@ -126,6 +139,7 @@ use App\models\MetaAnswer;
                             </div>
                         </form>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

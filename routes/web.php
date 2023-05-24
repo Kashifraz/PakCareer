@@ -44,6 +44,9 @@ Route::get('/counselor/discussion', [QuestionController::class, 'index'])->middl
 //student dashboard
 Route::get('student/discussion', [QuestionController::class, 'index'])->middleware(['auth', 'verified'])->name('student.discussion');
 
+//student dashboard
+Route::get('admin/discussion', [QuestionController::class, 'index'])->middleware(['auth', 'verified'])->name('admin.discussion');
+
 //Account settings 
 Route::middleware('auth')->group(function () {
     Route::get('/setting', [SettingController::class, 'edit'])->name('setting.edit');
@@ -90,6 +93,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/postanswer', [AnswerController::class, 'store'])->name('post.answer');
     Route::get('/showquestion/{question}', [QuestionController::class, 'show'])->name('show.question');
     Route::get('/deletequestion/{question}', [QuestionController::class, 'destroy'])->name('question.destroy');
+    Route::get('/deleteanswer/{answer}', [AnswerController::class, 'destroy'])->name('answer.destroy');
     Route::get('/countupvote/{answer}/{user}', [MetaAnswerController::class, 'countUpVote'])->name('count.upvote');
     Route::get('/countdownvote/{answer}/{user}', [MetaAnswerController::class, 'countDownVote'])->name('count.downvote');
 });

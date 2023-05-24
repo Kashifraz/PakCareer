@@ -66,7 +66,7 @@
                                     @else
                                     <img class="w-8 h-8 rounded-full" src="{{ asset('images/avatar.png')}}">
                                     @endif
-                                    <a class="hover:underline" href="{{route('profile.show', $counselor->id )}}"><b class="mt-2 ml-3">{{$counselor->name}}</b></a>
+                                    <a class="hover:underline" href="{{route('profile.show', $counselor->profile->id )}}"><b class="mt-2 ml-3">{{$counselor->name}}</b></a>
                                 </p>
                             </td>
                             <td class="px-6 py-4">

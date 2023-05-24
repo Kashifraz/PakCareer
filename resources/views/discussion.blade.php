@@ -14,6 +14,7 @@
                 </div>
                 @endif
                 <div class="p-6 text-gray-900">
+                    @if(Auth::user()->role != 'a')
                     <form method="post" action="{{route('ask.question')}}">
                         @csrf
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
@@ -29,6 +30,7 @@
                             </div>
                         </div>
                     </form>
+                    @endif
                 </div>
                 @if(count($questions) > 0 )
                 @foreach ($questions as $question)
@@ -55,7 +57,7 @@
                     <a href="{{route('show.question',$question->id)}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                         <i class="fa fa-eye "></i>
                     </a>
-                    @if (Auth::user()->id == $question->user->id)
+                    @if (Auth::user()->id == $question->user->id || Auth::user()->role == 'a')
                     <a href="{{route('question.destroy',$question->id)}}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 ">
                         <i class="fa fa-trash "></i>
                     </a>

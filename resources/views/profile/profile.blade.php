@@ -132,7 +132,7 @@
                                     </li>
                                     @endforeach
                                     @else
-                                    <p>Please add education information to profile</p>
+                                    <p>No education information to show</p>
                                     @endif
 
                                 </ul>
@@ -188,7 +188,7 @@
                                         </li>
                                         @endforeach
                                         @else
-                                        <p>Please add experience information to profile</p>
+                                        <p>No experience information to show</p>
                                         @endif
 
                                     </ul>
@@ -273,7 +273,8 @@
 
                         @endif
 
-                        @if($skill->proficiency_score < 65 ) <div class="grid grid-cols-12 gap-4 p-3">
+                        @if($skill->proficiency_score < 65 ) 
+                        <div class="grid grid-cols-12 gap-4 p-3">
                             <div class="col-span-11">
                                 <div class="mb-1 text-base font-medium text-red-700 ">
                                     <?php $percentage = "width:" . $skill->proficiency_score . "%" ?>
@@ -303,7 +304,7 @@
 
                     @endforeach
                     @else
-                    <p>Please add skills to your profile.</p>
+                    <p>No skills information to show</p>
                     @endif
                 </div>
             </div>

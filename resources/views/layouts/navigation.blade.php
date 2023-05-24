@@ -28,6 +28,10 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('admin.discussion')" :active="request()->routeIs('admin.discussion')">
+                        {{ __('Discussion') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('admin.students')" :active="request()->routeIs('admin.students')">
                         {{ __('Students') }}
                     </x-nav-link>

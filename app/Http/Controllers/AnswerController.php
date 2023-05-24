@@ -22,5 +22,10 @@ class AnswerController extends Controller
 
         return redirect()->back()->with('success', 'answer posted successfully');
     }
+
+    public function destroy(Answer $answer){
+        $answer->delete();
+        return redirect()->back()->with('success', 'answer deleted successfully');
+    }
   
 }

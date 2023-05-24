@@ -51,7 +51,6 @@ class ProfileController extends Controller
 
     public function update(Request $request, Profile $profile)
     {
-
         $validated = $request->validate([
             'intro' => 'required|min:50|max:500',
             'profession' => 'required|max:50',

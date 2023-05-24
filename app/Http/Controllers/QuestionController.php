@@ -43,7 +43,7 @@ class QuestionController extends Controller
 
     public function destroy(Question $question)
     {
-        $answers = Answer::where('question_id',$question->id)->with(["replies","likes"])->latest()->get();
+        $answers = Answer::where('question_id',$question->id)->latest()->get();
         foreach ($answers as $answer) {
             $answer->delete();
         }
