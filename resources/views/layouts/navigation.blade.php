@@ -23,6 +23,12 @@
                     </x-nav-link>
                     @endif
 
+                    @if (Auth::user()->role == 's')
+                    <x-nav-link href="http://127.0.0.1:5000/" >
+                        {{ __('AI Quiz') }}
+                    </x-nav-link>
+                    @endif
+
                     @if (Auth::user()->role == 'a')
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
