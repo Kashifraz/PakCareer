@@ -23,10 +23,16 @@ class MessageController extends Controller
     
     public function showalerts()
     {
-        $messages = Message::where('is_student', true)
-        ->where('counselor_id', Auth::user()->id)->get();
+        $messages = null;
+        if(Auth::user()->role == 'c'){
+            $messages = Message::where('is_student', true)
+            ->where('counselor_id', Auth::user()->id)->get();
+        }else if(Auth::user()->role == 's'){
+            $messages = Message::where('is_student', false)
+            ->where('student_id', Auth::user()->id)->get();
+        }
         return view('message.messagealert', [
-            'messages' => $messages,
+            'messages' =>  $messages,
         ]);
     }
 

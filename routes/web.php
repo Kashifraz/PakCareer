@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/post_message', [MessageController::class, 'store'])->name('message.post');
     Route::get('/message_alerts', [MessageController::class, 'showalerts'])->name('message.alerts');
 });
-
+ 
 Route::get('counselors', [ProfileController::class, 'create'])->name('counselors.show')->middleware('auth');
 Route::post('counselors', [ProfileController::class, 'create'])->name('counselors.show')->middleware('auth');
 

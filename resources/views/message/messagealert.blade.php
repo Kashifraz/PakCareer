@@ -11,7 +11,7 @@
                 <p class="font-bold text-lg">Errors while processing request.</p>
                 <ul class="max-w-md space-y-1 list-disc list-inside ">
                     @foreach ($errors->all() as $error)
-                    <li>
+                    <li> 
                         {{$error}}
                     </li>
                     @endforeach
@@ -24,7 +24,6 @@
                 <p>{{ Session::get('success') }}</p>
             </div>
             @endif
-
 
             <div class="w-full max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 ">
                 <div class="flex items-center justify-between mb-4">

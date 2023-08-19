@@ -1,3 +1,18 @@
+<?php 
+use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
+
+$messages = null;
+if(Auth::user()->role == 'c'){
+$messages = Message::where('is_student', true)
+->where('counselor_id', Auth::user()->id)->count();
+}else if(Auth::user()->role == 's'){
+$messages = Message::where('is_student', false)
+->where('student_id', Auth::user()->id)->count();
+}
+
+?>
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +39,7 @@
                     @endif
 
                     @if (Auth::user()->role == 's')
-                    <x-nav-link href="http://127.0.0.1:5000/" >
+                    <x-nav-link href="http://127.0.0.1:5000/">
                         {{ __('AI Quiz') }}
                     </x-nav-link>
                     @endif
@@ -47,22 +62,27 @@
                     </x-nav-link>
                     @endif
 
-                    @if (Auth::user()->role == 'c')
-                    <x-nav-link :href="route('message.alerts')" :active="request()->routeIs('message.alerts')">
-                        {{ __('Messages') }}
-                    </x-nav-link>
-                    @endif
-
                     @if(Auth::user()->role == 's' || Auth::user()->role == 'c')
                     <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
                         {{ __('Profile') }}
                     </x-nav-link>
                     @endif
-                    
+
                     @if (Auth::user()->role == 's')
                     <x-nav-link :href="route('counselors.show')" :active="request()->routeIs('counselors.show')">
                         {{ __('Counselors') }}
                     </x-nav-link>
+                    @endif
+
+                    @if (Auth::user()->role == 'c' || Auth::user()->role == 's')
+                    <x-nav-link :href="route('message.alerts')" :active="request()->routeIs('message.alerts')">
+                        {{ __('Messages') }}
+                        
+                        <span class="inline-flex items-center justify-center w-6 h-6 ml-2 text-xs font-semibold text-white bg-blue-700 rounded-full">
+                            {{$messages}}
+                        </span>
+                    </x-nav-link>
+
                     @endif
                 </div>
             </div>
@@ -74,7 +94,7 @@
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             @php
                             if(Auth::user()->role != "a"){
-                                $profile_image = Auth::user()->profile->profile_image;
+                            $profile_image = Auth::user()->profile->profile_image;
                             }
                             @endphp
                             <div>
@@ -143,7 +163,7 @@
                 {{ __('Messages') }}
             </x-responsive-nav-link>
             @endif
-            
+
 
             @if (Auth::user()->role == 's')
             <x-responsive-nav-link :href="route('counselors.show')" :active="request()->routeIs('counselors.show')">
